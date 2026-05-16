@@ -2,16 +2,17 @@
 
 @keyframes heroMarquee {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 .hero-marquee-track {
   display: flex;
-  animation: heroMarquee 8s linear infinite;
+  width: max-content;
+  animation: heroMarquee 65s linear infinite;
   will-change: transform;
 }
 

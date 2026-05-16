@@ -10,35 +10,56 @@ const fallbackProjects = [
   {
     id: 1,
     num: '01',
-    category: 'Client',
-    name: 'Nextlevel Studio',
+    category: 'Film',
+    name: 'The Escape Teaser',
     type: 'video',
     videoUrl: 'https://ayushs-portfolio.s3.ap-south-1.amazonaws.com/project+1.mov',
-    description: 'Nextlevel Studio Brand Vision',
+    description: 'Crafted entirely on iPhone, this teaser delivers a raw and immersive roller-coaster cinematic experience through intense visuals, dynamic shots, and gripping atmosphere.',
   },
   {
     id: 2,
     num: '02',
-    category: 'Personal',
-    name: 'Aura Brand Identity',
-    col1img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
-    col1img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
-    col2img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
+    category: 'Film',
+    name: 'Blood Paradise Announcement',
+    type: 'video',
+    videoUrl: 'https://ayushs-portfolio.s3.ap-south-1.amazonaws.com/film30.mov',
+    description: 'A hauntingly brutal visual announcement that unfolds through blood-soaked imagery and dark cinematic symbolism, revealing the terrifying timeline of Blood Paradise.',
   },
   {
     id: 3,
     num: '03',
-    category: 'Client',
-    name: 'Solaris Digital',
-    col1img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
-    col1img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
-    col2img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
+    category: 'Film',
+    name: 'The Escape',
+    type: 'video',
+    videoUrl: 'https://ayushs-portfolio.s3.ap-south-1.amazonaws.com/g5.mov',
+    description: 'A metaphorical roller-coaster film driven more by actions than words, where emotions, tension, and storytelling unfold through powerful visuals and cinematic expression.',
+  },
+  {
+    id: 4,
+    num: '04',
+    category: 'Cultural',
+    name: 'Chaat Film',
+    type: 'video',
+    videoUrl: 'https://ayushs-portfolio.s3.ap-south-1.amazonaws.com/chat6.mov',
+    description: 'A cultural cinematic portrayal of the grand festival celebrated across Bihar, Jharkhand, and Chhattisgarh, capturing deep devotion, traditions, and spiritual connection.',
+  },
+  {
+    id: 5,
+    num: '05',
+    category: 'Event',
+    name: 'College Cultural Festival Glimpse',
+    type: 'video',
+    videoUrl: 'https://ayushs-portfolio.s3.ap-south-1.amazonaws.com/ak7.mov',
+    description: 'A high-energy cinematic glimpse of the college cultural fest where artist B Praak set the stage on fire, showcasing electrifying performances and unforgettable moments.',
+  },
+  {
+    id: 6,
+    num: '06',
+    category: 'Short Film',
+    name: 'KARM — The Game of Yes and No',
+    type: 'video',
+    videoUrl: 'https://ayushs-portfolio.s3.ap-south-1.amazonaws.com/K2.mov',
+    description: 'My first short film, officially selected for the college film festival, telling the story of a college student through an engaging narrative that explores choices and emotions.',
   },
 ];
 
@@ -123,7 +144,7 @@ const VideoCardContent = ({ project }) => (
           &ldquo;{project.description}&rdquo;
         </p>
       )}
-      <div className="flex-1 w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden relative bg-black/40">
+      <div className="flex-1 w-full rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden relative bg-[#0C0C0C]">
         <video
           src={project.videoUrl}
           controls
@@ -139,67 +160,32 @@ const VideoCardContent = ({ project }) => (
 );
 
 /* ─────────────────────────────────────────────────────────────
-   Single animated card — driven by the parent's scrollYProgress.
+   Individual card component.
 
-   Each card gets a slice of the overall scroll:
-     cardStart → cardEnd  =  the window in which this card is "active"
+   Two roles:
+     • "active" card  → sits at y=0, z-index 1
+     • "entering" card → slides up from 100% → 0%, z-index 2
 
-   Transitions:
-     • Y position: starts below (100%) → slides to 0 → stays
-     • Scale of PREVIOUS card: 1 → shrinks to 0.92
-     • Opacity of PREVIOUS card: 1 → fades to 0.5
+   Since we only ever render 2 cards (active + entering), overlap
+   between non-adjacent cards is impossible.
    ───────────────────────────────────────────────────────────── */
 
-const AnimatedCard = ({ project, index, totalCards, scrollYProgress }) => {
-  const segment = 1 / totalCards;
-  const cardStart = index * segment;
-  const cardEnd = (index + 1) * segment;
-  const cardMid = cardStart + segment * 0.4;
-
-  // Card entrance: slide up from below
-  // First card is always visible (starts at y=0)
+const SlidingCard = ({ project, isActive, cardStart, cardMid, scrollYProgress }) => {
   const y = useTransform(
     scrollYProgress,
-    index === 0
-      ? [0, 0.001]
-      : [cardStart, cardMid],
-    index === 0
-      ? ['0%', '0%']
-      : ['100%', '0%']
+    isActive ? [0, 0.001] : [cardStart, cardMid],
+    isActive ? ['0%', '0%'] : ['100%', '0%']
   );
-
-  // Card exit: scale down when the NEXT card arrives
-  const scale = useTransform(
-    scrollYProgress,
-    [cardEnd - segment * 0.1, cardEnd + segment * 0.3],
-    [1, 0.92]
-  );
-
-  // Card exit: fade when next card arrives
-  const opacity = useTransform(
-    scrollYProgress,
-    [cardEnd - segment * 0.1, cardEnd + segment * 0.3],
-    [1, 0.4]
-  );
-
-  // z-index: later cards stack on top
-  const zIndex = index + 1;
-
-  // The last card shouldn't scale/fade (nothing comes after it)
-  const isLast = index === totalCards - 1;
 
   return (
     <motion.div
       className="absolute inset-0 rounded-[40px] sm:rounded-[50px] md:rounded-[60px]
                  border-2 border-[#D7E2EA] bg-[#0C0C0C]
                  p-4 sm:p-5 md:p-6 overflow-hidden
-                 origin-top will-change-transform
-                 flex flex-col"
+                 will-change-transform flex flex-col"
       style={{
         y,
-        scale: isLast ? 1 : scale,
-        opacity: isLast ? 1 : opacity,
-        zIndex,
+        zIndex: isActive ? 1 : 2,
       }}
     >
       {project.type === 'video' ? (
@@ -215,19 +201,18 @@ const AnimatedCard = ({ project, index, totalCards, scrollYProgress }) => {
    Main section — the scroll-locked pinned container.
 
    How it works:
-   1. A tall outer wrapper creates the scroll distance
-      (100vh per card = totalCards × 100vh).
-   2. Inside, a `sticky` container pins the visible area to
-      the viewport. The screen "stops" here.
-   3. The overall scroll progress through the wrapper drives
-      the card entrance/exit animations.
-   4. Cards animate in-place — the screen doesn't move,
-      only the cards transition.
+   1. A tall outer wrapper creates the scroll distance.
+   2. Inside, a sticky container pins the visible area.
+   3. We track `activeIndex` from scrollYProgress — only the
+      active card and the next entering card are rendered.
+   4. All other cards are unmounted from the DOM, so zero
+      chance of ghost overlap.
    ───────────────────────────────────────────────────────────── */
 
 const ProjectsSection = () => {
   const [projects, setProjects] = useState(fallbackProjects);
   const sectionRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -247,6 +232,18 @@ const ProjectsSection = () => {
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
+
+  const totalCards = projects.length;
+  const segment = 1 / totalCards;
+
+  // Track which card segment the scroll is in
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on('change', (v) => {
+      const idx = Math.min(Math.floor(v / segment), totalCards - 1);
+      setActiveIndex(idx);
+    });
+    return unsubscribe;
+  }, [scrollYProgress, segment, totalCards]);
 
   return (
     <section
@@ -270,20 +267,31 @@ const ProjectsSection = () => {
       <div
         ref={sectionRef}
         className="relative"
-        style={{ height: `${projects.length * 100}vh` }}
+        style={{ height: `${totalCards * 100}vh` }}
       >
         {/* Sticky viewport — this is what "locks" the screen */}
         <div className="sticky top-0 h-screen overflow-hidden px-5 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6">
           <div className="max-w-7xl mx-auto relative h-full">
-            {projects.map((project, i) => (
-              <AnimatedCard
-                key={project.id || project.num}
-                project={project}
-                index={i}
-                totalCards={projects.length}
-                scrollYProgress={scrollYProgress}
-              />
-            ))}
+            {projects.map((project, i) => {
+              // Only render the active card and the next one sliding in
+              const isActive = i === activeIndex;
+              const isNext = i === activeIndex + 1;
+              if (!isActive && !isNext) return null;
+
+              const cardStart = i * segment;
+              const cardMid = cardStart + segment * 0.5;
+
+              return (
+                <SlidingCard
+                  key={project.id || project.num}
+                  project={project}
+                  isActive={isActive}
+                  cardStart={cardStart}
+                  cardMid={cardMid}
+                  scrollYProgress={scrollYProgress}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
