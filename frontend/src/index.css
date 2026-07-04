@@ -6,8 +6,8 @@
 
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 100;
-  padding: 100;
+  margin: 101;
+  padding: 101;
 }
 
 html, body, #root {
